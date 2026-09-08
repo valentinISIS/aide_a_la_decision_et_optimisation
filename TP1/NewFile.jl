@@ -71,3 +71,42 @@ end
 
 al_from_file = read_graph(joinpath(@__DIR__, "graph.txt"))
 println(al_from_file)
+
+queue = [1]
+typeof(queue)
+
+bfs = function (graph, start)
+    queue = [start]
+    seen = []
+    while length(queue) > 0
+        node = popfirst!(queue)
+        println("Exploring node $(node)")
+        push!(seen, node)
+        for neigbourgh in graph[node]
+            if !(neigbourgh in seen)
+                push!(queue, neigbourgh)
+            end
+        end
+    end
+end
+
+println("-----BFS-----")
+bfs(al, 1)
+
+dfs = function (graph, start)
+    stack = [start]
+    seen = []
+    while length(stack) > 0
+        node = pop!(stack)
+        println("Exploring node $(node)")
+        push!(seen, node)
+        for neigbourgh in graph[node]
+            if !(neigbourgh in seen)
+                push!(stack, neigbourgh)
+            end
+        end
+    end
+end
+
+println("-----DFS-----")
+dfs(al, 1)
