@@ -32,7 +32,7 @@ for i in 1:9
 end
 
 println("\n", "----Adjacent list----")
-al = [
+unweight_graph = [
     [2, 3],
     [1, 4, 5],
     [1, 6],
@@ -46,7 +46,7 @@ al = [
 
 for i in 1:9
     rlt = "The node " + node_names[i] + " is connected to : "
-    for j in al[i]
+    for j in unweight_graph[i]
         rlt = rlt + node_names[j] + " "
     end
     println(rlt)
@@ -70,8 +70,8 @@ read_graph = function(filename::String)
     end
 end
 
-al_from_file = read_graph(joinpath(@__DIR__, "graph.txt"))
-println(al_from_file)
+small_graph = read_graph(joinpath(@__DIR__, "graph.txt"))
+println(small_graph)
 
 queue = [1]
 typeof(queue)
@@ -92,7 +92,7 @@ bfs = function (graph, start)
 end
 
 println("-----BFS-----")
-bfs(al, 1)
+bfs(unweight_graph, 1)
 
 dfs = function (graph, start)
     stack = [start]
@@ -110,7 +110,7 @@ dfs = function (graph, start)
 end
 
 println("-----DFS-----")
-dfs(al, 1)
+dfs(unweight_graph, 1)
 
 dijkstra = function (graph, start_node, end_node)
     
@@ -154,7 +154,7 @@ end
 
 println("-----Dijkstra-----")
 println("----Easy graph----")
-dijkstra(al_from_file, 1, 9)
+dijkstra(small_graph, 1, 9)
 
 println("----Hard graph----") 
 
@@ -192,6 +192,6 @@ end
 
 println("-----Dijkstra-----")
 println("----Easy graph----")
-bellman_ford(al_from_file, 1, 9)
+bellman_ford(small_graph, 1, 9)
 
 println("----Hard graph----") 
