@@ -135,7 +135,7 @@ dijkstra = function (graph, start_node, end_node)
     pred = [Vector{Int64}() for _ in 1:length(graph)]
     dist[start_node] = 0
 
-    node = 0
+    node = start_node
     while length(stack) > 0 & node != end_node
         node, index = get_min_dist(stack, dist)
         deleteat!(stack, index)
@@ -155,5 +155,43 @@ end
 println("-----Dijkstra-----")
 println("----Easy graph----")
 dijkstra(al_from_file, 1, 9)
+
+println("----Hard graph----") 
+
+
+bellman_ford = function (graph, start_node, end_node)
+
+    dist = [ typemax(Int64) for _ in 1:length(graph)]
+    stack = [i for i in 1:length(graph)]
+    pred = [Vector{Int64}() for _ in 1:length(graph)]
+    dist[start_node] = 0
+
+    for _ in eachindex(stack)
+        changement = false
+        for i in eachindex(graph)
+            for j in eachindex(graph[i])
+                u = i
+                v = graph[i][j][1]
+                w = graph[i][j][2]
+                if dist[u] + w < dist[v]
+                    changement = true
+                    dist[v] = dist[u] + w
+                    pred[v] = copy(pred[u])
+                    push!(pred[v], u)
+                end
+            end
+        end
+        if !changement
+            break
+        end
+    end
+    println("Minimun dist equal : ", dist[end_node])
+    println("The best road found is :", pred[end_node])
+end
+
+
+println("-----Dijkstra-----")
+println("----Easy graph----")
+bellman_ford(al_from_file, 1, 9)
 
 println("----Hard graph----") 
